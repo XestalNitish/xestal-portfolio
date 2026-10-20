@@ -1,0 +1,15 @@
+[theme]
+primaryColor = "#7C3AED"
+backgroundColor = "#F4F0FF"
+secondaryBackgroundColor = "#EAE2F8"
+textColor = "#1E1B4B"
+font = "sans serif"
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false
