@@ -7,6 +7,7 @@ dark editorial aesthetic, URL query-parameter routing, and modular components.
 """
 
 import os
+import urllib.parse
 import streamlit as st
 
 # 1. Page Configuration
@@ -39,8 +40,11 @@ from components.contact_view import render_contact
 
 # 4. Route Handling via st.query_params
 current_tab = st.query_params.get("tab", "home")
-project_id = st.query_params.get("id", st.query_params.get("project", None))
-selected_cat = st.query_params.get("cat", "All")
+raw_project_id = st.query_params.get("id", st.query_params.get("project", None))
+project_id = urllib.parse.unquote_plus(raw_project_id) if raw_project_id else None
+
+raw_cat = st.query_params.get("cat", "All")
+selected_cat = urllib.parse.unquote_plus(raw_cat) if raw_cat else "All"
 
 # Normalize tab if user opened detail view
 nav_active_tab = "projects" if current_tab == "project_detail" else current_tab

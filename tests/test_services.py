@@ -1,11 +1,13 @@
 """
 test_services.py
 Automated validation of data loading, dynamic category counts,
-flagship dossiers, and query parameter routing logic.
+flagship dossiers, query parameter routing logic, and category filter URL encoding.
 """
 
 import os
 import sys
+import urllib.parse
+import html
 
 # Ensure workspace root is in path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -80,10 +82,53 @@ def test_category_counts():
     counts = get_category_counts()
     print("Dynamic Category Counts:", counts)
     assert counts["All"] == 10
-    assert counts.get("Agentic AI", 0) >= 3
-    assert counts.get("RAG & Retrieval", 0) >= 2
-    assert counts.get("Developer Tools", 0) >= 3
+    assert counts.get("Agentic AI", 0) == 5
+    assert counts.get("RAG & Retrieval", 0) == 2
+    assert counts.get("Developer Tools", 0) == 6
+    assert counts.get("Machine Learning", 0) == 3
+    assert counts.get("Computer Vision", 0) == 1
     print("✓ Dynamic category counting functions correctly")
+
+
+def test_category_filtering_and_encoding():
+    # 1. Test source of truth filtering
+    rag_projects = get_projects_by_category("RAG & Retrieval")
+    assert len(rag_projects) == 2, f"Expected 2 RAG projects, got {len(rag_projects)}"
+    rag_names = [p["name"] for p in rag_projects]
+    assert "Ultimate Coding Agent" in rag_names
+    assert "X-Estal Enterprise Hybrid RAG Engine" in rag_names
+
+    agentic_projects = get_projects_by_category("Agentic AI")
+    assert len(agentic_projects) == 5, f"Expected 5 Agentic AI projects, got {len(agentic_projects)}"
+
+    all_projects = get_projects_by_category("All")
+    assert len(all_projects) == 10, f"Expected 10 projects for All, got {len(all_projects)}"
+
+    # 2. Test URL encoding of category with '&'
+    cat_name = "RAG & Retrieval"
+    encoded_cat = urllib.parse.quote(cat_name, safe="")
+    assert encoded_cat == "RAG%20%26%20Retrieval", f"Unexpected encoding: {encoded_cat}"
+
+    # 3. Test HTML escaping of anchor href
+    raw_query = f"?tab=projects&cat={encoded_cat}"
+    escaped_href = html.escape(raw_query)
+    assert escaped_href == "?tab=projects&amp;cat=RAG%20%26%20Retrieval"
+
+    # 4. Verify query parser decodes RAG%20%26%20Retrieval cleanly without truncation
+    parsed = urllib.parse.parse_qs(raw_query.lstrip("?"))
+    decoded_val = parsed["cat"][0]
+    assert decoded_val == "RAG & Retrieval", f"Parsed value truncated or corrupted: {decoded_val}"
+
+    # 5. Contrast against bad unencoded URL to document root cause
+    bad_query = f"?tab=projects&cat={cat_name}"
+    bad_parsed = urllib.parse.parse_qs(bad_query.lstrip("?"))
+    assert bad_parsed["cat"][0] == "RAG ", "Demonstrating root cause: unencoded & truncates cat to 'RAG '"
+
+    # 6. Verify case-insensitivity in filtering
+    assert len(get_projects_by_category("rag & retrieval")) == 2
+    assert len(get_projects_by_category("agentic ai")) == 5
+
+    print("✓ Category URL encoding, HTML attribute escaping, and filtering verified successfully")
 
 
 def test_case_studies():
@@ -110,6 +155,7 @@ if __name__ == "__main__":
     test_flagship_projects()
     test_flagship_dossiers()
     test_category_counts()
+    test_category_filtering_and_encoding()
     test_case_studies()
     test_invalid_project_id()
     print("\nALL AUTOMATED TESTS PASSED SUCCESSFULLY!")

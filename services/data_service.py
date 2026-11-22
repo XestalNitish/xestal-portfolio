@@ -63,16 +63,17 @@ def get_category_counts() -> Dict[str, int]:
 
 
 def get_projects_by_category(category: str) -> List[Dict[str, Any]]:
-    """Filters projects by category, or returns all if 'All'."""
+    """Filters projects by category (case-insensitive), or returns all if 'All'."""
     projects = get_all_projects()
-    if not category or category == "All":
+    if not category or category.strip().lower() == "all":
         return projects
+    norm_cat = category.strip().lower()
     filtered = []
     for proj in projects:
         categories = proj.get("category", [])
         if isinstance(categories, str):
             categories = [categories]
-        if category in categories:
+        if any(c.strip().lower() == norm_cat for c in categories):
             filtered.append(proj)
     return filtered
 
