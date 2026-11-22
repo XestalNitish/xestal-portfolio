@@ -22,10 +22,10 @@ Independent AI Engineer • Built with Python &amp; Streamlit • © {year}
 <a href="https://github.com/XestalNitish" target="_blank" rel="noopener noreferrer" class="footer-link">
 GitHub ↗
 </a>
-<a href="https://www.linkedin.com/in/nitish-kumar-33714642b/" target="_blank" rel="noopener noreferrer" class="footer-link">
+<a href="https://www.linkedin.com/in/nitish-kumar-ai" target="_blank" rel="noopener noreferrer" class="footer-link">
 LinkedIn ↗
 </a>
-<a href="mailto:nitishkumar.xestal@gmail.com" class="footer-link">
+<a href="mailto:nkumar22573@gmail.com" target="_blank" rel="noopener noreferrer" class="footer-link">
 Email ↗
 </a>
 <a href="?tab=projects" target="_self" class="footer-link">

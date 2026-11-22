@@ -7,8 +7,8 @@
     "category": ["Agentic AI", "Developer Tools", "RAG & Retrieval"],
     "status": "Active Development",
     "last_updated": "Nov 2026",
-    "live_demo_url": null,
-    "demo_type": "CLI & Local Streamlit Dashboard",
+    "live_demo_url": "https://ultimate-coding-agent-by-x-estal-nitish.streamlit.app",
+    "demo_type": "Live Streamlit Cloud Application",
     "description": "An autonomous multi-agent software engineering studio built on LangGraph that plans, writes, security-audits, executes, and self-heals Python projects with dual local LLMs and deterministic AST repairs.",
     "problem_statement": "Autonomous code generation agents often produce unvalidated imports, broken syntax, or insecure commands, wasting expensive LLM inference cycles attempting to repair trivial deterministic errors. Additionally, relying exclusively on cloud APIs limits offline engineering workflows and exposes sensitive environment keys.",
     "actual_features": [
@@ -47,8 +47,8 @@
     "category": ["RAG & Retrieval", "Agentic AI"],
     "status": "Verified & Benchmarked",
     "last_updated": "Oct 2026",
-    "live_demo_url": null,
-    "demo_type": "Streamlit Cloud Compatible",
+    "live_demo_url": "https://xestal-enterprise-rag-engine-by-x-estal-nitish.streamlit.app",
+    "demo_type": "Live Streamlit Cloud Application",
     "description": "A production-grade hybrid retrieval-augmented generation engine combining BM25 keyword search and Chroma MMR vector retrieval with 100% offline CPU mode, workspace isolation, and empirical benchmark evaluation.",
     "problem_statement": "Standard RAG applications frequently suffer from keyword mismatch when queries contain domain terminology or mixed-language terms (Hinglish), and they fail to distinguish between retrieval misses and generation inaccuracies when measuring accuracy.",
     "actual_features": [

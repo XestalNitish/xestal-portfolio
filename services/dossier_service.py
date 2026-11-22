@@ -12,8 +12,8 @@ FLAGSHIP_DOSSIERS: Dict[str, Dict[str, Any]] = {
         "name": "Ultimate Coding Agent",
         "tagline": "Autonomous multi-agent AI software engineer and deep technical research system.",
         "repo_url": "https://github.com/XestalNitish/ultimate-coding-agent",
-        "live_demo_url": None,
-        "demo_note": "Local CLI & Streamlit Mission Control dashboard in repository.",
+        "live_demo_url": "https://ultimate-coding-agent-by-x-estal-nitish.streamlit.app",
+        "demo_note": "Live deployed application on Streamlit Community Cloud.",
         "p1_overview": (
             "Ultimate Coding Agent is an enterprise-grade, autonomous multi-agent software engineering system "
             "designed to plan, write, security-audit, execute, and self-heal Python codebases. Operating on a "
@@ -168,7 +168,7 @@ FLAGSHIP_DOSSIERS: Dict[str, Dict[str, Any]] = {
             "Support for multi-language code generation (TypeScript and Rust AST parsers)."
         ],
         "p14_source_code": "https://github.com/XestalNitish/ultimate-coding-agent",
-        "p15_live_demo": None
+        "p15_live_demo": "https://ultimate-coding-agent-by-x-estal-nitish.streamlit.app"
     },
 
     "xestal-enterprise-rag-engine": {
@@ -176,8 +176,8 @@ FLAGSHIP_DOSSIERS: Dict[str, Dict[str, Any]] = {
         "name": "X-Estal Enterprise Hybrid RAG Engine",
         "tagline": "Hybrid (BM25 + Vector) RAG system with offline CPU inference, Hinglish normalization, and empirical evaluation.",
         "repo_url": "https://github.com/XestalNitish/xestal-enterprise-rag-engine",
-        "live_demo_url": None,
-        "demo_note": "Streamlit Cloud and local CPU ready.",
+        "live_demo_url": "https://xestal-enterprise-rag-engine-by-x-estal-nitish.streamlit.app",
+        "demo_note": "Live deployed application on Streamlit Community Cloud.",
         "p1_overview": (
             "X-Estal Enterprise Hybrid RAG Engine is a production-grade Retrieval-Augmented Generation pipeline "
             "combining BM25 exact keyword matching with Chroma MMR dense vector search (BAAI/bge-small-en-v1.5). "
@@ -310,7 +310,7 @@ FLAGSHIP_DOSSIERS: Dict[str, Dict[str, Any]] = {
             "Adding GraphRAG entity relationship extraction for complex multi-hop reasoning."
         ],
         "p14_source_code": "https://github.com/XestalNitish/xestal-enterprise-rag-engine",
-        "p15_live_demo": None
+        "p15_live_demo": "https://xestal-enterprise-rag-engine-by-x-estal-nitish.streamlit.app"
     },
 
     "xestal-research-agent": {

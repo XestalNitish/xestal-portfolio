@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-XestalNitish-black?logo=github)](https://github.com/XestalNitish)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nitish_Kumar-blue?logo=linkedin)](https://www.linkedin.com/in/nitish-kumar-33714642b/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nitish_Kumar-blue?logo=linkedin)](https://www.linkedin.com/in/nitish-kumar-ai)
 
 An independent personal engineering portfolio designed for **Nitish Kumar (`X-ESTAL Nitish`)**, specializing in **Agentic AI, LLM Engineering, Hybrid RAG Architectures, and Intelligent Software Systems**.
 
@@ -16,8 +16,8 @@ Designed with the restraint and technical clarity of a professional engineering 
 
 | Project | Domain | Architecture Highlights | Live Demo / Repository |
 | :--- | :--- | :--- | :--- |
-| **⚡ Ultimate Coding Agent** *(Flagship)* | Autonomous SWE Multi-Agent Studio | 10-node StateGraph flow, dual local GGUF models (`llama-server`), deterministic AST repair, environment secret scrubbing, LangSmith live tracing | [Repository](https://github.com/XestalNitish/ultimate-coding-agent) |
-| **🧠 X-Estal Enterprise Hybrid RAG** *(Flagship)* | Enterprise Hybrid Retrieval | 50/50 BM25 + Chroma MMR, 95.8% retrieval hit rate on 53-question benchmark, SSRF IP defense, Hinglish query normalization | [Repository](https://github.com/XestalNitish/xestal-enterprise-rag-engine) |
+| **⚡ Ultimate Coding Agent** *(Flagship)* | Autonomous SWE Multi-Agent Studio | 10-node StateGraph flow, dual local GGUF models (`llama-server`), deterministic AST repair, environment secret scrubbing, LangSmith live tracing | [Launch App 🚀](https://ultimate-coding-agent-by-x-estal-nitish.streamlit.app) • [Repository](https://github.com/XestalNitish/ultimate-coding-agent) |
+| **🧠 X-Estal Enterprise Hybrid RAG** *(Flagship)* | Enterprise Hybrid Retrieval | 50/50 BM25 + Chroma MMR, 95.8% retrieval hit rate on 53-question benchmark, SSRF IP defense, Hinglish query normalization | [Launch App 🚀](https://xestal-enterprise-rag-engine-by-x-estal-nitish.streamlit.app) • [Repository](https://github.com/XestalNitish/xestal-enterprise-rag-engine) |
 | **🔬 X-Estal Research Agent** *(Flagship)* | Autonomous Deep-Web Literature Synthesis | LangGraph `WebSearchState`, recursive web/academic paper scraping, structured dossier synthesis with formal citations | [Launch App 🚀](https://xestal-research-agent-by-x-estal-nitish.streamlit.app/) |
 | **💻 Code Dev Agent** | Cloud Autonomous Programming Studio | StateGraph cycle dampeners, pre-execution security audits, automated runtime traceback diagnosis and repair | [Launch App 🚀](https://code-dev-agent-by-x-estal-nitish.streamlit.app) |
 | **🔍 Plearun Verified Findings** | Deterministic Incident Verification | 5-step offline forensic verification pipeline: multi-encoding defense (BOM, CP1252, Latin1), clock drift alignment, deterministic scorecard | [Repository](https://github.com/XestalNitish/plearun-verified-findings) |
@@ -82,4 +82,4 @@ This portfolio intentionally avoids generic AI template aesthetics (no neon grad
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-Developed by **Nitish Kumar (`X-ESTAL Nitish`)** • [GitHub](https://github.com/XestalNitish) • [LinkedIn](https://www.linkedin.com/in/nitish-kumar-33714642b/)
+Developed by **Nitish Kumar (`X-ESTAL Nitish`)** • [GitHub](https://github.com/XestalNitish) • [LinkedIn](https://www.linkedin.com/in/nitish-kumar-ai) • Email: [nkumar22573@gmail.com](mailto:nkumar22573@gmail.com)

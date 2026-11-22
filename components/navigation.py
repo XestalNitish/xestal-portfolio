@@ -2,12 +2,13 @@
 navigation.py
 Renders the restrained dark editorial top navigation bar.
 Synchronizes with Streamlit's st.query_params for robust URL routing.
-Supports: browser back/forward, direct bookmarking, and page refreshes.
+Includes verified external links and one-click resume download.
 """
 
-import streamlit as st
 from typing import Dict, Any
+import streamlit as st
 from components.utils import render_html
+from services.resume_service import get_resume_data_url, is_resume_available
 
 
 NAV_ITEMS = [
@@ -50,6 +51,12 @@ def render_navigation(active_tab: str = "home") -> None:
         is_active = "active" if item["id"] == active_tab else ""
         links_html += f'<a href="?tab={item["id"]}" target="_self" class="nav-item {is_active}">{item["label"]}</a>'
 
+    resume_url = get_resume_data_url()
+    if resume_url:
+        resume_nav_link = f'<a href="{resume_url}" download="Nitish_Kumar_CV.pdf" class="nav-ext-link" style="color:var(--accent-secondary); font-weight:600;">Resume ↓</a>'
+    else:
+        resume_nav_link = '<a href="?tab=contact" target="_self" class="nav-ext-link" style="color:var(--text-muted);">Resume</a>'
+
     nav_html = f"""<div class="nav-wrapper">
 <div class="nav-container">
 <a href="?tab=home" target="_self" class="nav-brand">
@@ -60,10 +67,11 @@ def render_navigation(active_tab: str = "home") -> None:
 {links_html}
 </div>
 <div class="nav-external">
+{resume_nav_link}
 <a href="https://github.com/XestalNitish" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
 GitHub ↗
 </a>
-<a href="https://www.linkedin.com/in/nitish-kumar-33714642b/" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
+<a href="https://www.linkedin.com/in/nitish-kumar-ai" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
 LinkedIn ↗
 </a>
 </div>

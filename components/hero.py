@@ -1,15 +1,26 @@
 """
 hero.py
 Renders the two-column editorial hero section.
-Left column: Editorial headline, professional identity, candid description, actions.
+Left column: Editorial headline, professional identity, candid description, actions (including Resume Download).
 Right column: Handcrafted SVG technical architecture sketch illustrating an autonomous agent workflow.
 """
 
 from components.utils import render_html
+from services.resume_service import get_resume_data_url
 
 
 def render_hero() -> None:
     """Renders the editorial hero section."""
+    resume_url = get_resume_data_url()
+    if resume_url:
+        resume_btn_html = (
+            f'<a href="{resume_url}" download="Nitish_Kumar_CV.pdf" class="btn-secondary" '
+            f'style="border-color:rgba(214, 166, 93, 0.4); color:var(--accent-secondary) !important;">'
+            f'Download Resume ↓</a>'
+        )
+    else:
+        resume_btn_html = '<a href="?tab=contact" target="_self" class="btn-secondary">Resume</a>'
+
     svg_workflow = """<svg viewBox="0 0 460 380" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -102,6 +113,7 @@ retrieval systems, and intelligent developer tools.
 <a href="?tab=projects" target="_self" class="btn-primary">
 Explore Projects →
 </a>
+{resume_btn_html}
 <a href="https://github.com/XestalNitish" target="_blank" rel="noopener noreferrer" class="btn-secondary">
 GitHub Profile ↗
 </a>
