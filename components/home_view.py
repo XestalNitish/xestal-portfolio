@@ -5,51 +5,48 @@ Includes Hero, Candid About introduction, Curated Flagship Projects showcase,
 6 Engineering Principles, Current Focus, and Footer.
 """
 
-import streamlit as st
 from components.hero import render_hero
 from components.footer import render_footer
+from components.utils import render_html
 from services.data_service import get_flagship_projects
 
 
 def render_about_intro() -> None:
     """Renders the concise, honest editorial about introduction."""
-    about_html = """
-    <div style="padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--border);">
-      <div class="section-marker">// 01. BACKGROUND & APPROACH</div>
-      <h2 class="section-title">Engineering practical AI systems beyond standard API wrappers.</h2>
-      <div style="max-width: 820px; color: var(--text-secondary); font-size: 0.96rem; line-height: 1.75;">
-        <p style="margin-bottom: 1rem;">
-          I am an independent developer preparing for my first professional AI engineering role.
-          Rather than focusing solely on prompting cloud APIs, I spend my time building system architectures:
-          stateful agent workflows with LangGraph, hybrid retrieval pipelines with Chroma and BM25,
-          and offline inference with local GGUF models.
-        </p>
-        <p style="margin-bottom: 0;">
-          My engineering approach prioritizes empirical measurement over assumptions. When a multi-agent system
-          breaks or a RAG engine returns incorrect context, I investigate the exact failure layer — isolating
-          whether an error stems from retrieval hit failure, small-model reasoning capacity, or syntax generation —
-          and introduce deterministic guardrails (such as AST parsing and SSRF IP validation) to prevent recurrence.
-        </p>
-      </div>
-    </div>
-    """
-    st.markdown(about_html, unsafe_allow_html=True)
+    about_html = """<div style="padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--border);">
+<div class="section-marker">// 01. BACKGROUND &amp; APPROACH</div>
+<h2 class="section-title">Engineering practical AI systems beyond standard API wrappers.</h2>
+<div style="max-width: 820px; color: var(--text-secondary); font-size: 0.96rem; line-height: 1.75;">
+<p style="margin-bottom: 1rem;">
+I am an independent developer preparing for my first professional AI engineering role.
+Rather than focusing solely on prompting cloud APIs, I spend my time building system architectures:
+stateful agent workflows with LangGraph, hybrid retrieval pipelines with Chroma and BM25,
+and offline inference with local GGUF models.
+</p>
+<p style="margin-bottom: 0;">
+My engineering approach prioritizes empirical measurement over assumptions. When a multi-agent system
+breaks or a RAG engine returns incorrect context, I investigate the exact failure layer — isolating
+whether an error stems from retrieval hit failure, small-model reasoning capacity, or syntax generation —
+and introduce deterministic guardrails (such as AST parsing and SSRF IP validation) to prevent recurrence.
+</p>
+</div>
+</div>"""
+    render_html(about_html)
 
 
 def render_featured_flagships() -> None:
     """Renders the 3 curated flagship projects with editorial presentation."""
     flagships = get_flagship_projects()
 
-    st.markdown("""
-    <div style="padding: 2.5rem 0 1rem;">
-      <div class="section-marker">// 02. FLAGSHIP PROJECTS</div>
-      <h2 class="section-title">Verified systems with source code and empirical evidence.</h2>
-      <p class="section-subtitle">
-        Three distinct architectures addressing multi-file code generation, hybrid enterprise retrieval,
-        and autonomous deep-web research.
-      </p>
-    </div>
-    """, unsafe_allow_html=True)
+    header_html = """<div style="padding: 2.5rem 0 1rem;">
+<div class="section-marker">// 02. FLAGSHIP PROJECTS</div>
+<h2 class="section-title">Verified systems with source code and empirical evidence.</h2>
+<p class="section-subtitle">
+Three distinct architectures addressing multi-file code generation, hybrid enterprise retrieval,
+and autonomous deep-web research.
+</p>
+</div>"""
+    render_html(header_html)
 
     for proj in flagships:
         categories_html = "".join([f'<span class="category-pill">{cat}</span>' for cat in proj.get("category", [])])
@@ -58,47 +55,41 @@ def render_featured_flagships() -> None:
 
         demo_link_html = ""
         if proj.get("live_demo_url"):
-            demo_link_html = f"""
-            <a href="{proj['live_demo_url']}" target="_blank" rel="noopener noreferrer" class="project-link demo">
-              Launch Live App ↗
-            </a>
-            """
+            demo_link_html = f'<a href="{proj["live_demo_url"]}" target="_blank" rel="noopener noreferrer" class="project-link demo">Launch Live App ↗</a>'
 
-        card_html = f"""
-        <div class="featured-project-card">
-          <div class="featured-project-meta-row">
-            <div class="project-category-pills">
-              {categories_html}
-            </div>
-            <span class="project-status-tag">{proj.get('status')} • {proj.get('last_updated')}</span>
-          </div>
+        card_html = f"""<div class="featured-project-card">
+<div class="featured-project-meta-row">
+<div class="project-category-pills">
+{categories_html}
+</div>
+<span class="project-status-tag">{proj.get('status')} • {proj.get('last_updated')}</span>
+</div>
 
-          <h3 class="featured-project-title">{proj.get('name')}</h3>
-          <p class="featured-project-desc">{proj.get('description')}</p>
+<h3 class="featured-project-title">{proj.get('name')}</h3>
+<p class="featured-project-desc">{proj.get('description')}</p>
 
-          <div class="project-architecture-block">
-            <div class="architecture-block-label">Verified Engineering Capabilities</div>
-            <ul class="architecture-feature-list">
-              {features_list_html}
-            </ul>
-          </div>
+<div class="project-architecture-block">
+<div class="architecture-block-label">Verified Engineering Capabilities</div>
+<ul class="architecture-feature-list">
+{features_list_html}
+</ul>
+</div>
 
-          <div class="project-tech-row">
-            {tech_html}
-          </div>
+<div class="project-tech-row">
+{tech_html}
+</div>
 
-          <div class="project-links-row">
-            <a href="{proj.get('repo_url')}" target="_blank" rel="noopener noreferrer" class="project-link">
-              View Repository ↗
-            </a>
-            {demo_link_html}
-            <a href="?tab=project_detail&id={proj.get('id')}" target="_self" class="project-link" style="margin-left: auto;">
-              Full Architecture Detail →
-            </a>
-          </div>
-        </div>
-        """
-        st.markdown(card_html, unsafe_allow_html=True)
+<div class="project-links-row">
+<a href="{proj.get('repo_url')}" target="_blank" rel="noopener noreferrer" class="project-link">
+View Repository ↗
+</a>
+{demo_link_html}
+<a href="?tab=project_detail&id={proj.get('id')}" target="_self" class="project-link" style="margin-left: auto;">
+Full Architecture Detail →
+</a>
+</div>
+</div>"""
+        render_html(card_html)
 
 
 def render_engineering_principles() -> None:
@@ -138,27 +129,23 @@ def render_engineering_principles() -> None:
 
     boxes_html = ""
     for p in principles:
-        boxes_html += f"""
-        <div class="principle-box">
-          <div class="principle-num">{p['num']}</div>
-          <div class="principle-title">{p['title']}</div>
-          <div class="principle-desc">{p['desc']}</div>
-        </div>
-        """
+        boxes_html += f"""<div class="principle-box">
+<div class="principle-num">{p['num']}</div>
+<div class="principle-title">{p['title']}</div>
+<div class="principle-desc">{p['desc']}</div>
+</div>"""
 
-    principles_html = f"""
-    <div style="padding: 2.5rem 0 2rem; border-top: 1px solid var(--border);">
-      <div class="section-marker">// 03. ENGINEERING PRINCIPLES</div>
-      <h2 class="section-title">Core principles guiding system design.</h2>
-      <p class="section-subtitle">
-        Practical standards developed through hands-on project implementation and error analysis.
-      </p>
-      <div class="principles-grid">
-        {boxes_html}
-      </div>
-    </div>
-    """
-    st.markdown(principles_html, unsafe_allow_html=True)
+    principles_html = f"""<div style="padding: 2.5rem 0 2rem; border-top: 1px solid var(--border);">
+<div class="section-marker">// 03. ENGINEERING PRINCIPLES</div>
+<h2 class="section-title">Core principles guiding system design.</h2>
+<p class="section-subtitle">
+Practical standards developed through hands-on project implementation and error analysis.
+</p>
+<div class="principles-grid">
+{boxes_html}
+</div>
+</div>"""
+    render_html(principles_html)
 
 
 def render_current_focus() -> None:
@@ -184,28 +171,24 @@ def render_current_focus() -> None:
 
     items_html = ""
     for item in focus_items:
-        items_html += f"""
-        <div class="focus-item">
-          <div class="focus-item-label">{item['label']}</div>
-          <div class="focus-item-text">{item['text']}</div>
-        </div>
-        """
+        items_html += f"""<div class="focus-item">
+<div class="focus-item-label">{item['label']}</div>
+<div class="focus-item-text">{item['text']}</div>
+</div>"""
 
-    focus_html = f"""
-    <div style="padding: 1rem 0 2.5rem; border-top: 1px solid var(--border);">
-      <div class="section-marker">// 04. CURRENT FOCUS</div>
-      <h2 class="section-title">Active engineering investigations.</h2>
-      <p class="section-subtitle">
-        Ongoing research and practical implementation areas I am actively exploring.
-      </p>
-      <div class="focus-card">
-        <div class="focus-list">
-          {items_html}
-        </div>
-      </div>
-    </div>
-    """
-    st.markdown(focus_html, unsafe_allow_html=True)
+    focus_html = f"""<div style="padding: 1rem 0 2.5rem; border-top: 1px solid var(--border);">
+<div class="section-marker">// 04. CURRENT FOCUS</div>
+<h2 class="section-title">Active engineering investigations.</h2>
+<p class="section-subtitle">
+Ongoing research and practical implementation areas I am actively exploring.
+</p>
+<div class="focus-card">
+<div class="focus-list">
+{items_html}
+</div>
+</div>
+</div>"""
+    render_html(focus_html)
 
 
 def render_homepage() -> None:

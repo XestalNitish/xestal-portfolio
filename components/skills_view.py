@@ -8,8 +8,8 @@ Organized into clear engineering tiers with honest classification:
 Zero fake percentages, zero animated skill bars.
 """
 
-import streamlit as st
 from components.footer import render_footer
+from components.utils import render_html
 
 
 def render_skills() -> None:
@@ -82,31 +82,29 @@ def render_skills() -> None:
         }
     ]
 
-    header_html = """
-    <div style="padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--border);">
-      <div class="section-marker">// TECHNICAL SKILLS</div>
-      <h1 class="section-title">Evidence-Based Engineering Competencies</h1>
-      <p class="section-subtitle">
-        Every skill listed below is backed by concrete implementations in public repositories,
-        classified honestly by practical project depth.
-      </p>
-      <div style="display:flex; align-items:center; gap:1rem; margin-top:1rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:0.75rem;">
-        <span style="display:inline-flex; align-items:center; gap:0.35rem; color:#10B981;">
-          <span style="width:6px; height:6px; border-radius:50%; background:#10B981;"></span>
-          Used in projects
-        </span>
-        <span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--accent);">
-          <span style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></span>
-          Currently learning
-        </span>
-        <span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--text-muted);">
-          <span style="width:6px; height:6px; border-radius:50%; background:var(--text-muted);"></span>
-          Explored
-        </span>
-      </div>
-    </div>
-    """
-    st.markdown(header_html, unsafe_allow_html=True)
+    header_html = """<div style="padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--border);">
+<div class="section-marker">// TECHNICAL SKILLS</div>
+<h1 class="section-title">Evidence-Based Engineering Competencies</h1>
+<p class="section-subtitle">
+Every skill listed below is backed by concrete implementations in public repositories,
+classified honestly by practical project depth.
+</p>
+<div style="display:flex; align-items:center; gap:1rem; margin-top:1rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:0.75rem;">
+<span style="display:inline-flex; align-items:center; gap:0.35rem; color:#10B981;">
+<span style="width:6px; height:6px; border-radius:50%; background:#10B981;"></span>
+Used in projects
+</span>
+<span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--accent);">
+<span style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></span>
+Currently learning
+</span>
+<span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--text-muted);">
+<span style="width:6px; height:6px; border-radius:50%; background:var(--text-muted);"></span>
+Explored
+</span>
+</div>
+</div>"""
+    render_html(header_html)
 
     for cat in skills_data:
         items_html = ""
@@ -118,33 +116,29 @@ def render_skills() -> None:
                 "rgba(109, 145, 255, 0.08)" if s["level"] == "Currently learning" else "rgba(115, 125, 141, 0.08)"
             )
 
-            items_html += f"""
-            <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; padding:1rem;">
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
-                <span style="font-family:var(--font-mono); font-size:0.85rem; font-weight:600; color:var(--text-primary);">{s['name']}</span>
-                <span style="font-family:var(--font-mono); font-size:0.68rem; color:{badge_color}; background:{badge_bg}; padding:0.15rem 0.4rem; border-radius:2px;">
-                  {s['level']}
-                </span>
-              </div>
-              <p style="font-size:0.82rem; color:var(--text-secondary); margin:0; line-height:1.5;">
-                {s['evidence']}
-              </p>
-            </div>
-            """
+            items_html += f"""<div style="background:var(--bg-main); border:1px solid var(--border); border-radius:4px; padding:1rem;">
+<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+<span style="font-family:var(--font-mono); font-size:0.85rem; font-weight:600; color:var(--text-primary);">{s['name']}</span>
+<span style="font-family:var(--font-mono); font-size:0.68rem; color:{badge_color}; background:{badge_bg}; padding:0.15rem 0.4rem; border-radius:2px;">
+{s['level']}
+</span>
+</div>
+<p style="font-size:0.82rem; color:var(--text-secondary); margin:0; line-height:1.5;">
+{s['evidence']}
+</p>
+</div>"""
 
-        cat_html = f"""
-        <div class="featured-project-card" style="margin-top:1.75rem; margin-bottom:1.75rem;">
-          <h2 style="font-family:var(--font-heading); font-size:1.25rem; color:var(--text-primary); margin-bottom:0.35rem;">
-            {cat['category']}
-          </h2>
-          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.25rem;">
-            {cat['description']}
-          </p>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.85rem;">
-            {items_html}
-          </div>
-        </div>
-        """
-        st.markdown(cat_html, unsafe_allow_html=True)
+        cat_html = f"""<div class="featured-project-card" style="margin-top:1.75rem; margin-bottom:1.75rem;">
+<h2 style="font-family:var(--font-heading); font-size:1.25rem; color:var(--text-primary); margin-bottom:0.35rem;">
+{cat['category']}
+</h2>
+<p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.25rem;">
+{cat['description']}
+</p>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.85rem;">
+{items_html}
+</div>
+</div>"""
+        render_html(cat_html)
 
     render_footer()

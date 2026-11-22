@@ -7,6 +7,7 @@ Supports: browser back/forward, direct bookmarking, and page refreshes.
 
 import streamlit as st
 from typing import Dict, Any
+from components.utils import render_html
 
 
 NAV_ITEMS = [
@@ -47,31 +48,25 @@ def render_navigation(active_tab: str = "home") -> None:
     links_html = ""
     for item in NAV_ITEMS:
         is_active = "active" if item["id"] == active_tab else ""
-        links_html += f"""
-        <a href="?tab={item['id']}" target="_self" class="nav-item {is_active}">
-          {item['label']}
-        </a>
-        """
+        links_html += f'<a href="?tab={item["id"]}" target="_self" class="nav-item {is_active}">{item["label"]}</a>'
 
-    nav_html = f"""
-    <div class="nav-wrapper">
-      <div class="nav-container">
-        <a href="?tab=home" target="_self" class="nav-brand">
-          <span class="nav-brand-title">X-ESTAL</span>
-          <span class="nav-brand-sub">Nitish Kumar</span>
-        </a>
-        <div class="nav-links">
-          {links_html}
-        </div>
-        <div class="nav-external">
-          <a href="https://github.com/XestalNitish" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
-            GitHub ↗
-          </a>
-          <a href="https://www.linkedin.com/in/nitish-kumar-33714642b/" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
-            LinkedIn ↗
-          </a>
-        </div>
-      </div>
-    </div>
-    """
-    st.markdown(nav_html, unsafe_allow_html=True)
+    nav_html = f"""<div class="nav-wrapper">
+<div class="nav-container">
+<a href="?tab=home" target="_self" class="nav-brand">
+<span class="nav-brand-title">X-ESTAL</span>
+<span class="nav-brand-sub">Nitish Kumar</span>
+</a>
+<div class="nav-links">
+{links_html}
+</div>
+<div class="nav-external">
+<a href="https://github.com/XestalNitish" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
+GitHub ↗
+</a>
+<a href="https://www.linkedin.com/in/nitish-kumar-33714642b/" target="_blank" rel="noopener noreferrer" class="nav-ext-link">
+LinkedIn ↗
+</a>
+</div>
+</div>
+</div>"""
+    render_html(nav_html)
