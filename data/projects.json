@@ -1,0 +1,346 @@
+[
+  {
+    "id": "ultimate-coding-agent",
+    "name": "Ultimate Coding Agent",
+    "flagship": true,
+    "repo_url": "https://github.com/XestalNitish/ultimate-coding-agent",
+    "category": ["Agentic AI", "Developer Tools", "RAG & Retrieval"],
+    "status": "Active Development",
+    "last_updated": "Nov 2026",
+    "live_demo_url": null,
+    "demo_type": "CLI & Local Streamlit Dashboard",
+    "description": "An autonomous multi-agent software engineering studio built on LangGraph that plans, writes, security-audits, executes, and self-heals Python projects with dual local LLMs and deterministic AST repairs.",
+    "problem_statement": "Autonomous code generation agents often produce unvalidated imports, broken syntax, or insecure commands, wasting expensive LLM inference cycles attempting to repair trivial deterministic errors. Additionally, relying exclusively on cloud APIs limits offline engineering workflows and exposes sensitive environment keys.",
+    "actual_features": [
+      "10-node StateGraph flow: analyzer -> planner -> writer -> static_fix -> security_check -> executor -> reviewer -> debugger/replan.",
+      "Dual local LLM inference via llama-server (X-Estal-4B and Spark-X2.6-4B in GGUF format) with cloud fallbacks (Gemini, Groq, OpenAI).",
+      "Deterministic AST repair engine without LLM calls for syntax fixes, missing __init__.py files, relative import corrections, and duplicate class deduplication.",
+      "Security audit node scanning for dangerous subprocess invocations, OS injection patterns, and scrubbing environment variables (KEY, TOKEN, SECRET, PASSWORD) before child execution.",
+      "Production telemetry and observability integration with LangSmith live tracing under project 'ultimate-coding-agent'.",
+      "Topological dependency ordering (_toposort) ensuring modules are generated in strict contract order."
+    ],
+    "tech_stack": [
+      "Python 3.11",
+      "LangGraph",
+      "LangSmith",
+      "llama-server / GGUF",
+      "AST Analysis",
+      "ChromaDB",
+      "Streamlit",
+      "BM25"
+    ],
+    "evidence_references": [
+      "coder/code_dev.py (analyzer_node, planner_node, security_audit_node, static_fix_node)",
+      "coder/local_llm_service.py (offline llama-server connection on port 8082)",
+      "README.md with complete architectural diagrams and LangSmith trace configuration"
+    ],
+    "known_limitations": [
+      "Local 4B quantization models occasionally struggle with deeply nested multi-package refactoring without explicit contract constraints.",
+      "Sandboxed execution is limited to POSIX-compatible limits and subprocess timeout controls; full container isolation requires Docker sidecars."
+    ]
+  },
+  {
+    "id": "xestal-enterprise-rag-engine",
+    "name": "X-Estal Enterprise Hybrid RAG Engine",
+    "flagship": true,
+    "repo_url": "https://github.com/XestalNitish/xestal-enterprise-rag-engine",
+    "category": ["RAG & Retrieval", "Agentic AI"],
+    "status": "Verified & Benchmarked",
+    "last_updated": "Oct 2026",
+    "live_demo_url": null,
+    "demo_type": "Streamlit Cloud Compatible",
+    "description": "A production-grade hybrid retrieval-augmented generation engine combining BM25 keyword search and Chroma MMR vector retrieval with 100% offline CPU mode, workspace isolation, and empirical benchmark evaluation.",
+    "problem_statement": "Standard RAG applications frequently suffer from keyword mismatch when queries contain domain terminology or mixed-language terms (Hinglish), and they fail to distinguish between retrieval misses and generation inaccuracies when measuring accuracy.",
+    "actual_features": [
+      "Hybrid retrieval ensemble combining BM25 keyword matching and Chroma MMR vector search using BAAI/bge-small-en-v1.5 with 50/50 weighting.",
+      "Multi-tenant workspace isolation storing vector collections and tokenized document archives per unique workspace_id.",
+      "Hinglish-aware preprocessing applying NFKC Unicode normalization and domain stop-word filtering before indexing and query execution.",
+      "Hardened document reader in tools/_safe.py blocking private, loopback, and link-local IP addresses to prevent Server-Side Request Forgery (SSRF) and enforcing a 25MB download ceiling.",
+      "Dedicated no_answer refusal node that responds with a deterministic refusal when retrieval context similarity is below threshold.",
+      "Built-in 53-question benchmark harness evaluating precision, latency, retrieval hit rate, and failure attribution."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "LangGraph",
+      "ChromaDB",
+      "BM25 (Rank-BM25)",
+      "BAAI/bge-small-en-v1.5",
+      "llama.cpp",
+      "Streamlit",
+      "Requests"
+    ],
+    "evidence_references": [
+      "eval_summary.json (empirical evaluation of arXiv:2610.30074v1)",
+      "database/retriever.py (EnsembleRetriever implementation and workspace persistence)",
+      "tools/_safe.py (check_host IP validation and safe_local_path jail checks)"
+    ],
+    "known_limitations": [
+      "Empirical evaluation was conducted on a single 53-question test set (arXiv paper 2610.30074v1); while 5/5 out-of-scope questions were correctly refused, this does not constitute a mathematical proof against hallucinations on arbitrary corpora.",
+      "Of 30 overall benchmark failures, 28 were caused by small-model local CPU generation limits rather than retrieval misses (retrieval hit rate was 95.8%)."
+    ]
+  },
+  {
+    "id": "xestal-research-agent",
+    "name": "X-Estal Research Agent",
+    "flagship": true,
+    "repo_url": "https://github.com/XestalNitish/xestal-research-agent",
+    "category": ["Agentic AI", "Developer Tools"],
+    "status": "Deployed & Operational",
+    "last_updated": "Oct 2026",
+    "live_demo_url": "https://xestal-research-agent-by-x-estal-nitish.streamlit.app/",
+    "demo_type": "Live Streamlit Cloud Application",
+    "description": "An autonomous research assistant built with LangGraph that decomposes complex investigative prompts, scrapes academic and live web sources, aggregates citations, and compiles structured analytical dossiers.",
+    "problem_statement": "Manual literature reviews and competitive technical research require synthesizing dozens of unstructured web pages and PDF papers, a process prone to human oversight, broken citations, and context fragmentation.",
+    "actual_features": [
+      "LangGraph StateGraph coordination centered around a typed WebSearchState dictionary.",
+      "Query decomposition generating targeted sub-queries for parallel search execution.",
+      "Dual-phase tooling architecture separating investigation tools (DuckDuckGo, NLP parsers, web scrapers) from delivery tools (document generation and file ops).",
+      "Citation-grounded report compiler that organizes findings into executive summaries, key technical trade-offs, and reference bibliographies.",
+      "Multi-format document export supporting Markdown, PDF, and DOCX outputs."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "LangGraph",
+      "LangChain",
+      "BeautifulSoup4",
+      "DuckDuckGo Search",
+      "PyPDF",
+      "Streamlit"
+    ],
+    "evidence_references": [
+      "research_web.py (WebSearchState and LangGraph StateGraph execution)",
+      "tools/research_web.py and tools/doc_generation.py",
+      "Verified active live deployment on Streamlit Community Cloud"
+    ],
+    "known_limitations": [
+      "Web scraping depth is bounded by rate limits on public search endpoints and paywalled academic portals.",
+      "Synthesis quality relies on context window size and can truncate extensive multi-hundred page documents."
+    ]
+  },
+  {
+    "id": "code-dev-agent",
+    "name": "Code Dev Agent (v1 / Cloud Studio)",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/code-dev-agent",
+    "category": ["Agentic AI", "Developer Tools"],
+    "status": "Deployed & Operational",
+    "last_updated": "Oct 2026",
+    "live_demo_url": "https://code-dev-agent-by-x-estal-nitish.streamlit.app",
+    "demo_type": "Live Streamlit Cloud Application",
+    "description": "Autonomous cloud coding agent featuring architecture planning, sandboxed module execution, and automated traceback repair loops in a responsive web UI.",
+    "problem_statement": "Testing autonomous code generation loops directly in a web browser requires controlled runtime boundaries, clean error capture, and non-blocking state progression.",
+    "actual_features": [
+      "StateGraph-based cycle control with cycle dampening to prevent infinite iteration loops.",
+      "Pre-execution security audit for unauthorized file system modifications.",
+      "Runtime traceback inspection with automatic error categorization (SyntaxError, ImportError, AttributeError).",
+      "Browser-based interactive coding interface hosted on Streamlit Cloud."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "LangGraph",
+      "Streamlit",
+      "AST",
+      "Subprocess Sandbox"
+    ],
+    "evidence_references": [
+      "code_dev.py and agents/orchestrator.py in repository",
+      "Verified active live deployment on Streamlit Community Cloud"
+    ],
+    "known_limitations": [
+      "Server-side execution on Streamlit Community Cloud operates within memory and thread limits, making long-running compiles impractical."
+    ]
+  },
+  {
+    "id": "plearun-verified-findings",
+    "name": "Plearun Verified Findings Pipeline",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/plearun-verified-findings",
+    "category": ["Developer Tools"],
+    "status": "Completed Engineering Assignment",
+    "last_updated": "Nov 2026",
+    "live_demo_url": null,
+    "demo_type": "CLI & Automated Test Suite",
+    "description": "A deterministic, offline verification pipeline that audits natural language incident report claims against heterogeneous machine records (VTT, CSV, JSON) with strict clock alignment and encoding resilience.",
+    "problem_statement": "Verifying incident assertions against raw forensic telemetry requires handling mixed encodings (BOM, CP1252, Latin1), misaligned device clocks, and non-linear timestamp formats without relying on hallucination-prone generative LLM calls.",
+    "actual_features": [
+      "5-step deterministic evaluation pipeline: Ingestion -> Normalization -> Extraction -> Evaluation -> Scorecard.",
+      "Multi-encoding defense mechanism decoding utf-8-sig (with BOM), cp1252, and latin1 while preserving line-by-line byte fidelity.",
+      "Timestamp normalization aligning epoch milliseconds, ISO-8601 strings, and irregular WebVTT cue times.",
+      "Deterministic claim correlation linking statements to machine records with match, conflict, or unverified classifications.",
+      "Zero external API dependencies; 100% deterministic local execution validated by automated test suite."
+    ],
+    "tech_stack": [
+      "Python 3.11",
+      "Regex Tokenizers",
+      "Datetime",
+      "Pytest",
+      "JSON Schema"
+    ],
+    "evidence_references": [
+      "plearun_cli.py and README.md",
+      "tests/test_pipeline.py and schema.json",
+      "findings.json output artifact"
+    ],
+    "known_limitations": [
+      "Designed specifically for the Plearun incident record schema and heterogeneous machine telemetry rules."
+    ]
+  },
+  {
+    "id": "brain-tumor-classifier",
+    "name": "Brain Tumor Classifier",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/Brain-Tumor-Classifier-by-X-ESTAL-NITISH",
+    "category": ["Computer Vision", "Machine Learning"],
+    "status": "Deployed & Operational",
+    "last_updated": "Oct 2026",
+    "live_demo_url": "https://brain-tumor-classifier-by-x-estal-nitish.streamlit.app",
+    "demo_type": "Live Streamlit Cloud Application",
+    "description": "Medical computer vision application utilizing Convolutional Neural Networks (CNN) to categorize brain MRI radiological scans across four diagnostic classes with confidence scoring.",
+    "problem_statement": "Assisting radiological pre-screening requires rapid, standardized classification of brain magnetic resonance imaging scans to identify potential abnormalities before detailed radiologist review.",
+    "actual_features": [
+      "Multi-class MRI scan classification: Glioma, Meningioma, Pituitary tumor, and Healthy / No Tumor.",
+      "Image normalization and spatial resizing pipeline for heterogeneous scanner outputs.",
+      "Real-time prediction confidence score distribution visualized via interactive bar charts.",
+      "Instant drag-and-drop file upload with immediate inference."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "TensorFlow / Keras",
+      "OpenCV / PIL",
+      "NumPy",
+      "Streamlit"
+    ],
+    "evidence_references": [
+      "app.py and model artifact in repository",
+      "Verified active live deployment on Streamlit Community Cloud"
+    ],
+    "known_limitations": [
+      "Trained on public benchmark MRI datasets; intended purely for educational and technical portfolio demonstration, not clinical diagnostic use."
+    ]
+  },
+  {
+    "id": "bitcoin-price-predictor",
+    "name": "Bitcoin Price Predictor",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/Bit-coin-price-predictor",
+    "category": ["Machine Learning"],
+    "status": "Deployed & Operational",
+    "last_updated": "Oct 2026",
+    "live_demo_url": "https://x-estal-nitish-bit-coin-price-predictor.streamlit.app",
+    "demo_type": "Live Streamlit Cloud Application",
+    "description": "Quantitative cryptocurrency time-series forecasting application employing Long Short-Term Memory (LSTM) recurrent neural networks and technical market indicators.",
+    "problem_statement": "Cryptocurrency market data exhibits high non-linear volatility, requiring recurrent architectures capable of capturing sequential temporal dependencies and momentum shifts.",
+    "actual_features": [
+      "Deep recurrent architecture using LSTM layers trained on sequential historical price data (btc_model.keras).",
+      "Technical momentum indicator extraction including Relative Strength Index (RSI), Moving Average Convergence Divergence (MACD), and Simple Moving Averages.",
+      "Interactive prediction visualization plotting forecasted trajectory against historical market trends."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "Keras / TensorFlow",
+      "LSTM",
+      "Pandas",
+      "NumPy",
+      "Streamlit"
+    ],
+    "evidence_references": [
+      "btc_model.keras and app.py in repository",
+      "Verified active live deployment on Streamlit Community Cloud"
+    ],
+    "known_limitations": [
+      "Financial time-series data is inherently non-stationary; model predictions reflect statistical pattern recognition and should not be used as financial advice."
+    ]
+  },
+  {
+    "id": "invoice-processing-agent",
+    "name": "Invoice Processing Agent",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/invoice-processing-agent",
+    "category": ["Agentic AI", "Developer Tools"],
+    "status": "Prototype In Progress",
+    "last_updated": "Oct 2026",
+    "live_demo_url": null,
+    "demo_type": "Local Docker Environment",
+    "description": "Document intelligence workflow for parsing unstructured B2B invoices into structured financial schemas with validation checks and containerized packaging.",
+    "problem_statement": "Extracting line items, vendor tax IDs, and totals from diverse PDF and scanned invoices requires robust schema validation to catch OCR and extraction discrepancies.",
+    "actual_features": [
+      "Automated PDF document intake and text extraction pipeline.",
+      "Structured key-value pair and line-item extraction mapped to formal JSON schemas.",
+      "Mathematical reconciliation checking whether item sums match calculated totals and tax amounts.",
+      "Containerized deployment configuration via Dockerfile."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "Pydantic",
+      "PDFPlumber / PyMuPDF",
+      "Docker",
+      "Streamlit"
+    ],
+    "evidence_references": [
+      "Dockerfile, .env.example, and repository code structure across 55 files"
+    ],
+    "known_limitations": [
+      "Complex nested multi-page invoice tables with broken borders require manual review fallback."
+    ]
+  },
+  {
+    "id": "heart-stroke-prediction",
+    "name": "Heart Stroke Prediction",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/heart_stork_prediction",
+    "category": ["Machine Learning"],
+    "status": "Completed Machine Learning Project",
+    "last_updated": "Oct 2026",
+    "live_demo_url": null,
+    "demo_type": "Streamlit App in Repo",
+    "description": "Supervised tabular machine learning pipeline predicting cardiovascular and stroke risk probabilities based on clinical demographic and biometric factors.",
+    "problem_statement": "Analyzing patient demographic data (age, hypertension, heart disease history, average glucose level, BMI) to estimate relative risk probabilities.",
+    "actual_features": [
+      "Exploratory data analysis handling imbalanced clinical class distributions.",
+      "Feature engineering, scaling, and categorical encoding pipeline.",
+      "Interactive risk score calculator providing immediate percentage estimates based on user input."
+    ],
+    "tech_stack": [
+      "Python 3.10+",
+      "Scikit-Learn",
+      "Pandas",
+      "NumPy",
+      "Streamlit"
+    ],
+    "evidence_references": [
+      "app.py and README.md in repository"
+    ],
+    "known_limitations": [
+      "Trained on public tabular health records; useful for learning feature importance and class balancing, not for clinical decision-making."
+    ]
+  },
+  {
+    "id": "library-management-system",
+    "name": "Library Management System",
+    "flagship": false,
+    "repo_url": "https://github.com/XestalNitish/library-management-system",
+    "category": ["Developer Tools"],
+    "status": "Foundational Early Project",
+    "last_updated": "Oct 2026",
+    "live_demo_url": null,
+    "demo_type": "Python Script & Relational Database",
+    "description": "Foundational Python software project implementing relational book checkout workflows, inventory management, and database CRUD operations.",
+    "problem_statement": "Managing book records, member borrowing status, and due dates via structured relational operations.",
+    "actual_features": [
+      "Relational data model for books, users, and borrowing transactions.",
+      "CRUD operations: add, search, check out, return, and delete books.",
+      "Early foundational milestone demonstrating core programming logic and data structures."
+    ],
+    "tech_stack": [
+      "Python",
+      "SQLite / SQL",
+      "CLI"
+    ],
+    "evidence_references": [
+      "Source repository on GitHub"
+    ],
+    "known_limitations": [
+      "First public repository; serves as an honest chronological milestone of developer progression."
+    ]
+  }
+]

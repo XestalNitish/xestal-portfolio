@@ -1,0 +1,23 @@
+{
+  "name": "Nitish Kumar",
+  "brand": "X-ESTAL Nitish",
+  "github_username": "XestalNitish",
+  "github_url": "https://github.com/XestalNitish",
+  "linkedin_url": "https://www.linkedin.com/in/nitish-kumar-33714642b/",
+  "instagram_url": "https://www.instagram.com/x_estal_nitish",
+  "email": "nitishkumar.xestal@gmail.com",
+  "headline": "Building intelligent systems with code, reasoning, and experimentation.",
+  "subheadline": "AI Engineering • Agentic AI • LLM Systems • RAG Architectures",
+  "bio_short": "I am an independent AI developer focused on building autonomous agent workflows, hybrid retrieval systems, and intelligent software engineering tools with Python, LangGraph, and local/cloud LLMs.",
+  "bio_full": "I focus on the engineering realities of artificial intelligence: understanding failure modes, designing deterministic guardrails around stochastic models, and building software that moves beyond simple chat interfaces into stateful execution. My recent work centers on autonomous multi-agent coding studios, local inference pipelines using llama.cpp and GGUF quantization, and hybrid retrieval-augmented generation engines with empirical benchmarking.",
+  "target_roles": [
+    "AI Engineer Intern",
+    "Agentic AI Developer",
+    "Junior LLM Engineer",
+    "Python AI Application Developer"
+  ],
+  "location": "India",
+  "status_text": "Open to AI Engineer Internships & Junior Roles",
+  "resume_available": false,
+  "resume_note": "Official resume available on request via email or LinkedIn."
+}

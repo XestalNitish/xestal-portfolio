@@ -1,0 +1,63 @@
+[
+  {
+    "id": "rag-benchmark-failure-attribution",
+    "title": "Failure Attribution in Hybrid RAG: Why 28 of 30 Errors Were Generation, Not Retrieval",
+    "subtitle": "An empirical analysis of a 53-question benchmark on arXiv:2610.30074v1 separating evidence retrieval from small-model reasoning.",
+    "category": "RAG & Retrieval",
+    "date": "October 2026",
+    "read_time": "6 min read",
+    "problem": "Most RAG evaluations report a single accuracy percentage, obscuring whether failures stem from poor document retrieval or downstream LLM generation errors. Without isolating retrieval from generation, teams often waste weeks tuning embeddings when the actual bottleneck is model reasoning capacity.",
+    "investigation": "We evaluated the X-Estal Enterprise Hybrid RAG Engine across a 53-question benchmark dataset constructed from arXiv:2610.30074v1 (48 answerable questions across concept, factoid, formula, numeric, and table domains; 5 out-of-scope questions). Retrieval combined BM25 keyword search with Chroma MMR dense vector search (BAAI/bge-small-en-v1.5, 50/50 weighted). A local 4B GGUF model executed generation on CPU.",
+    "benchmark_metrics": {
+      "total_questions": 53,
+      "answerable_questions": 48,
+      "out_of_scope_questions": 5,
+      "retrieval_hit_rate": "46/48 (95.8%)",
+      "out_of_scope_handled": "5/5 (100.0% in this evaluation)",
+      "overall_pass": "23/53 (43.4%)",
+      "answerable_accuracy": "18/48 (37.5%)",
+      "total_failures": 30,
+      "failure_causes": {
+        "generation_failures": 28,
+        "retrieval_misses": 2
+      },
+      "breakdown_by_type": {
+        "concept": "7/12 (58.3%)",
+        "factoid": "4/6 (66.7%)",
+        "reasoning": "2/3 (66.7%)",
+        "formula": "2/6 (33.3%)",
+        "numeric": "3/19 (15.8%)",
+        "table": "0/2 (0.0%)"
+      }
+    },
+    "root_cause_analysis": "Of the 30 total failures, 28 occurred after the correct chunk was successfully retrieved in the top-k context. The local CPU 4B model struggled with multi-step arithmetic, floating-point table extractions, and complex LaTeX equations. Only 2 failures were actual retrieval misses where the relevant text was absent from the retrieved passages.",
+    "solution_implemented": "1. Preserved the hybrid 50/50 BM25 + dense vector pipeline because 95.8% retrieval hit rate confirmed retrieval was sound.\n2. Implemented a dedicated no_answer refusal node that bypasses the LLM entirely when retrieval confidence is below threshold.\n3. Added automatic cloud failover routing (Groq Llama 3.3 70B / Gemini 2.5 Flash) when numeric or table queries require advanced mathematical reasoning.",
+    "evaluation_limitations": "Important benchmark caveat: The 5/5 out-of-scope refusal rate reflects this specific 53-question test dataset on a single document. It demonstrates that the refusal node works as designed under these test conditions, but does not constitute a mathematical guarantee against hallucinations on arbitrary corpora or open-domain web data."
+  },
+  {
+    "id": "ast-deterministic-repair-loops",
+    "title": "Deterministic AST Repair vs. LLM Re-prompting in Autonomous Coding Agents",
+    "subtitle": "How eliminating LLM calls for trivial syntax and import bugs reduced loop latency and prevented cascade failures in LangGraph.",
+    "category": "Agentic AI",
+    "date": "November 2026",
+    "read_time": "8 min read",
+    "problem": "When autonomous coding agents generate multi-file projects, small errors such as missing imports, relative path mistakes, missing __init__.py files, and syntax typos often trigger full LLM re-prompting. Small models frequently hallucinate new errors while attempting to fix syntax, leading to circular failure loops.",
+    "investigation": "Profiling early iterations of the code generation graph revealed that over 65% of debugging cycles were spent re-prompting the LLM for mechanical fixes that can be determined statically through Abstract Syntax Tree (AST) inspection.",
+    "solution_implemented": "We partitioned the self-healing workflow into two distinct tiers:\n1. Deterministic Tier (static_fix_node & runtime_fix_node): Uses Python's built-in ast module to parse files, identify undefined names, auto-insert standard library imports, correct relative import paths, generate missing __init__.py files, fix argparse argument definitions, and deduplicate identical class definitions. Zero LLM tokens are consumed.\n2. Generative Tier (debugger_node & replan_node): Invoked only when code compiles statically and unit tests fail with logical assertion errors or deep runtime exceptions.",
+    "results": "Eliminated over 60% of LLM re-generation calls during project builds. Projects with purely structural or import-level defects heal in milliseconds through static AST transformations, reserving inference tokens for genuine algorithmic debugging.",
+    "evaluation_limitations": "Deterministic AST repair is bounded by static rules; complex dynamic runtime imports (e.g., importlib calls or dynamically evaluated code) still require generative debugging."
+  },
+  {
+    "id": "deterministic-incident-verification",
+    "title": "Building a Deterministic Verification Pipeline for Heterogeneous Machine Telemetry",
+    "subtitle": "Designing an offline 5-step auditing pipeline for incident report claims against diverse forensic records without generative hallucinations.",
+    "category": "Developer Tools",
+    "date": "November 2026",
+    "read_time": "5 min read",
+    "problem": "Auditing natural language incident reports against heterogeneous machine logs (bodycam WebVTT, dispatch CSVs, camera telemetry JSON) requires strict chronological alignment and defensive encoding handling. Generative LLMs often summarize away subtle timestamp discrepancies or invent details not present in the record.",
+    "investigation": "Forensic telemetry files arrived with inconsistent encodings (UTF-8-SIG with Byte Order Mark, CP1252 Windows code pages, and Latin1), irregular comment lines, and disparate timestamp representations (epoch milliseconds, ISO-8601 strings, and relative cue durations).",
+    "solution_implemented": "Engineered an offline 5-step deterministic verification engine in Python 3.11:\n1. Encoding Defense: Decodes each source through defensive fallback chains (utf-8-sig -> cp1252 -> latin1) and strips metadata comments without altering line offsets.\n2. Clock Normalization: Converts all telemetry timestamps into timezone-aware datetime objects and marks devices with non-linear drift as unaligned.\n3. Claim Extraction: Splits incident narratives into atomic factual statements (times, scene arrivals, speed indicators).\n4. Verification Engine: Cross-references checkable claims against record timestamps and values to generate match, conflict, or unverified classifications.\n5. Deterministic Scorecard: Emits structured JSON findings validated against a formal JSON schema.",
+    "results": "Achieved 100% deterministic, reproducible verification runs across all test records with zero external API dependencies.",
+    "evaluation_limitations": "Relies on rule-based assertion patterns; narrative claims with highly nuanced or colloquial phrasing require structured normalization before evaluation."
+  }
+]
